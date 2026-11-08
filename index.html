@@ -154,6 +154,14 @@
   .panel-foot { display: flex; justify-content: space-between; border-top: 1px solid var(--line); margin: 6px -12px 0; padding: 9px 16px 4px; font-size: 11px; color: var(--muted); }
   .demo-hint { text-align: center; color: rgba(255, 255, 255, .85); font-size: 13px; margin-top: 16px; }
 
+  /* Teaser video */
+  .film { padding: 40px 0 88px; }
+  .film-frame {
+    max-width: 960px; margin: 0 auto; border-radius: 24px; overflow: hidden; background: #0d0b1a;
+    box-shadow: var(--shadow); aspect-ratio: 16 / 9;
+  }
+  .film-frame video { display: block; width: 100%; height: 100%; object-fit: cover; }
+
   /* Sections */
   section { padding: 88px 0; }
   section.alt { background: var(--bg-alt); }
@@ -290,6 +298,15 @@
     </div>
   </div>
 </header>
+
+<section class="film" aria-label="Mixwell in action">
+  <div class="wrap">
+    <div class="film-frame">
+      <video id="teaser" src="teaser.mp4" poster="teaser-poster.jpg" muted loop playsinline preload="metadata"
+             aria-label="A 13-second demo: turning Music down, boosting a meeting, muting chat and sending the browser to headphones."></video>
+    </div>
+  </div>
+</section>
 
 <section id="features" class="alt">
   <div class="wrap">
@@ -562,6 +579,17 @@
     if (!reduceMotion) setTimeout(() => requestAnimationFrame(tick), 60);
   }
   tick();
+
+  // Teaser: plays while on screen; with reduced motion it waits for the viewer to press play.
+  const teaser = document.getElementById("teaser");
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    teaser.controls = true;
+  } else {
+    new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) teaser.play().catch(() => (teaser.controls = true));
+      else teaser.pause();
+    }, { threshold: 0.4 }).observe(teaser);
+  }
 </script>
 </body>
 </html>
