@@ -172,6 +172,11 @@
   .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .feature { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
   section.alt .feature { background: var(--surface); }
+  /* Feature clips: recorded from the app's real views */
+  .features + .features { margin-top: 18px; }
+  .feature.media { padding: 0; overflow: hidden; }
+  .feature.media video { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: #3b2f55; }
+  .feature.media .body { padding: 20px 24px 24px; }
   .feature .f-icon {
     width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; margin-bottom: 14px; color: var(--accent);
     background: color-mix(in srgb, var(--accent) 13%, transparent);
@@ -236,6 +241,7 @@
     .lede { margin-left: auto; margin-right: auto; }
     .cta { justify-content: center; }
     .features { grid-template-columns: 1fr 1fr; }
+    .features:has(.media) { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
     .steps, .pricing { grid-template-columns: 1fr; }
   }
   @media (max-width: 640px) {
@@ -302,7 +308,7 @@
 <section class="film" aria-label="Mixwell in action">
   <div class="wrap">
     <div class="film-frame">
-      <video id="teaser" src="teaser.mp4" poster="teaser-poster.jpg" muted loop playsinline preload="metadata"
+      <video id="teaser" data-autoplay src="teaser.mp4" poster="teaser-poster.jpg" muted loop playsinline preload="metadata"
              aria-label="A 13-second demo: turning Music down, boosting a meeting, muting chat and sending the browser to headphones."></video>
     </div>
   </div>
@@ -316,21 +322,32 @@
       <p>One click in the menu bar, and every app that's making sound is right there.</p>
     </div>
     <div class="features">
-      <div class="feature">
-        <div class="f-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></div>
-        <h3>A slider for every app</h3>
-        <p>From silent to 150%, with a snap at 100% and live levels glowing in each slider so you can see who's making noise.</p>
+      <div class="feature media">
+        <video data-autoplay src="feature-sliders.mp4" poster="feature-sliders.jpg" muted loop playsinline preload="metadata"
+               aria-label="Dragging Music down to 45% and boosting FaceTime to 130%, then double-clicking each back to 100%."></video>
+        <div class="body">
+          <h3>A slider for every app</h3>
+          <p>From silent to 150%, with a snap at 100% and live levels glowing in each slider so you can see who's making noise.</p>
+        </div>
       </div>
-      <div class="feature">
-        <div class="f-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9h4l5-4v14l-5-4H3z"/><path d="M17 9l4 6M21 9l-4 6"/></svg></div>
-        <h3>Mute just one app</h3>
-        <p>Silence a game, a browser tab or a chat app without touching anything else.</p>
+      <div class="feature media">
+        <video data-autoplay src="feature-mute.mp4" poster="feature-mute.jpg" muted loop playsinline preload="metadata"
+               aria-label="Clicking the speaker next to News to mute it, then clicking again to unmute."></video>
+        <div class="body">
+          <h3>Mute just one app</h3>
+          <p>Silence a game, a browser tab or a chat app without touching anything else.</p>
+        </div>
       </div>
-      <div class="feature">
-        <div class="f-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg></div>
-        <h3>Choose where each app plays</h3>
-        <p>Music on your AirPods, the call on the speakers, the game on your display. Per app, from the same menu.</p>
+      <div class="feature media">
+        <video data-autoplay src="feature-route.mp4" poster="feature-route.jpg" muted loop playsinline preload="metadata"
+               aria-label="Opening Music's output menu and sending it to AirPods Pro, then back to the system output."></video>
+        <div class="body">
+          <h3>Choose where each app plays</h3>
+          <p>Music on your AirPods, the call on the speakers, the game on your display. Per app, from the same menu.</p>
+        </div>
       </div>
+    </div>
+    <div class="features">
       <div class="feature">
         <div class="f-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg></div>
         <h3>Remembers every app</h3>
@@ -580,15 +597,16 @@
   }
   tick();
 
-  // Teaser: plays while on screen; with reduced motion it waits for the viewer to press play.
-  const teaser = document.getElementById("teaser");
+  // Teaser and feature clips: play while on screen; with reduced motion they wait for the viewer to press play.
+  const clips = document.querySelectorAll("video[data-autoplay]");
   if (reduceMotion || !("IntersectionObserver" in window)) {
-    teaser.controls = true;
+    clips.forEach((v) => (v.controls = true));
   } else {
-    new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) teaser.play().catch(() => (teaser.controls = true));
-      else teaser.pause();
-    }, { threshold: 0.4 }).observe(teaser);
+    const io = new IntersectionObserver((entries) => entries.forEach(({ target: v, isIntersecting }) => {
+      if (isIntersecting) v.play().catch(() => (v.controls = true));
+      else v.pause();
+    }), { threshold: 0.4 });
+    clips.forEach((v) => io.observe(v));
   }
 </script>
 </body>
