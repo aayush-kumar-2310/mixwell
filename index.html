@@ -432,7 +432,7 @@
       <details><summary>Which Macs does it work on?</summary><p>Macs with Apple silicon (M1 or later) running macOS 14.2 Sonoma or later, including Sequoia, Tahoe and Golden Gate.</p></details>
       <details><summary>Does Mixwell record my audio?</summary><p>No. macOS calls the permission "System Audio Recording" because Mixwell has to receive an app's sound in order to change its volume. The sound goes straight from the app, through Mixwell's volume control, to your speakers or headphones. It is never stored or sent anywhere.</p></details>
       <details><summary>Does it work with browsers, Spotify, Zoom and games?</summary><p>Yes. Anything that plays sound shows up, including individual browsers. Safari and Chrome are each controlled as one app, including their tabs.</p></details>
-      <details><summary>Will it slow down my Mac or add delay?</summary><p>Apps you leave at 100% are not touched at all. Apps you adjust get about 14 milliseconds of extra delay, well below what you can notice in video or calls. Mixwell itself uses around 0.2% CPU in the background.</p></details>
+      <details><summary>Will it slow down my Mac or add delay?</summary><p>Apps you leave at 100% are not touched at all. Apps you adjust get about 24 milliseconds of extra delay, well below what you can notice in video or calls. When an adjusted app goes quiet, Mixwell stops processing it, so your speakers or headphones can rest. In the background Mixwell uses around 0.1% CPU.</p></details>
       <details><summary>Does it work with AirPods and Bluetooth headphones?</summary><p>Yes, at full quality. Mixwell doesn't use your headphones' microphone, so they stay out of the lower-quality call mode.</p></details>
       <details><summary>What happens if Mixwell quits?</summary><p>Every app goes straight back to playing normally, at its usual volume, on its usual output.</p></details>
       <details><summary>How do I move it to a new Mac?</summary><p>On the old Mac, open Mixwell Settings and click Deactivate under License. Then activate the same key on the new Mac. Your license works on <span class="activations">2</span> Macs at a time.</p></details>
@@ -465,7 +465,7 @@
 <script>
   // ---- Store settings: edit these, nothing else. ----
   const CONFIG = {
-    buyUrl: "REPLACE with your Dodo checkout link",
+    buyUrl: "https://checkout.dodopayments.com/buy/pdt_0Nrj8Nn3QFFHB6kjv6m0T?quantity=1",
     supportEmail: "kumar.aayush2310@gmail.com",
     price: "$4.99",
     activations: 2,   // match the License Key entitlement in Dodo

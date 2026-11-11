@@ -1,0 +1,26 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>Mixwell</title>
+        <item>
+            <title>1.0.0</title>
+            <pubDate>Wed, 11 Nov 2026 21:52:09 +0530</pubDate>
+            <sparkle:version>10000</sparkle:version>
+            <sparkle:shortVersionString>1.0.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.2</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <description><![CDATA[<!-- Shown in Mixwell's update window. Plain HTML, no <html>/<body> tags.
+     For a new version: copy this file to <version>.html and replace the list. -->
+<h2>Mixwell 1.0</h2>
+<p>The first release. Every app gets its own volume in your menu bar.</p>
+<ul>
+  <li>A volume slider for each app that's playing sound, from silent up to 150% (200% in Settings).</li>
+  <li>Mute any app with one click.</li>
+  <li>Send an app to a different speaker or headphones.</li>
+  <li>Mixwell remembers each app's level and output.</li>
+</ul>
+]]></description>
+            <enclosure url="https://aayush-kumar-2310.github.io/mixwell/downloads/Mixwell-1.0.0.dmg" length="4297924" type="application/octet-stream" sparkle:edSignature="lgOw7AIYBHaSciWzbtagV+k9q6hMBpkHKcfBX4cuuKV9yyW78NabbdTuwiwKTf+Z7PcUwk7n25zOntlZYa70Bg=="/>
+        </item>
+    </channel>
+</rss>
